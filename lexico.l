@@ -23,7 +23,7 @@
 
 %%
 
-"/*"            		                {columnStartComment = column + 2; lineStartComment = yylineno; BEGIN(multLineComment);}
+"/*"            		                {columnStartComment = column; column+=2; lineStartComment = yylineno; BEGIN(multLineComment);}
     <multLineComment>"/*"               {(isFirstLine)?(isFirstLine=false):(printf("\n"));  printf("warning:%d:%d: '/*' within block comment", yylineno, column); column+=2;}
     <multLineComment><<EOF>>            {(isFirstLine)?(isFirstLine=false):(printf("\n"));  printf("error:lexical:%d:%d: unterminated comment", lineStartComment, columnStartComment); return 0;}
     <multLineComment>"*/" 	            {column+=2;BEGIN(INITIAL);}
