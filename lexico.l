@@ -31,9 +31,9 @@
     <multLineComment>"//"               {column+=2;}
     <multLineComment>\n                 {column = 1; yylineno++;}
     <multLineComment>[^"/*""*/""//"\n]+ {column+=strlen(yytext);}
-    <multLineComment>.                {column++;}    
+    <multLineComment>.                  {column++;}    
 
-"//".*\n    {(isFirstLine)?(isFirstLine=false):(printf("\n"));  printf("comment %s", yytext); column = 1; yylineno++;}
+"//".*\n    {column = 1; yylineno++;}
 
 [\"\'][^\"\'][\"\']                 {(isFirstLine)?(isFirstLine=false):(printf("\n")); printf("CHARACTER"); printString(3, yytext); column+=3;}
 [\"\']\\[abfnrtv0\\\'\"\?][\"\']    {(isFirstLine)?(isFirstLine=false):(printf("\n")); printf("CHARACTER"); printString(4, yytext); column+=4;}
